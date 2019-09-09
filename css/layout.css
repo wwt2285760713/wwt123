@@ -1,0 +1,30 @@
+body{color:#000;font:normal 100% Arial,sans-serif,Microsoft Yahei;margin:0;padding:0;}
+html,body,form,input,select,textarea,div,p,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;}
+ul,li,dl,dt,dd{list-style:none;}
+h1,h2,h3{font-weight:bold;color:#303030;font-family:Microsoft Yahei,w3;}
+
+/*public*/
+.left{float:left;}
+.right{float:right;}
+.relative{position:relative;left:0;top:0;}
+.clearfix:before,.clearfix:after{content:"";display:table;}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1;}
+.opacity6{ -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /* ie8  */filter:alpha(opacity=60);    /* ie5-7  */opacity:0.6;/* css standard, currently it works in most modern browsers  */}
+.app_center{width:100%;min-width:320px;margin-left:auto;margin-right:auto;}
+.red{color:red;}
+.c_999{color:#999;}
+.pt10{padding-top:10px;}
+.hide{display:none;}
+
+/*public scroll*/
+.scroll{width: 100%;}
+.scroll_box{height: 36vw;overflow:hidden;visibility:hidden;position:relative;}
+.scroll_wrap{overflow:hidden; position:relative;}
+.scroll_wrap li{position:relative;display:block;width:50%;float:left;}
+.scroll_wrap li a{display:block;margin:0 auto;position:relative;}
+.scroll_position{width: 20vw;position:absolute;left:46vw;z-index:400px;bottom:0;}
+.scroll_position li{display: inline-block;width:2vw;height:2vw;border-radius:50%;background:#fff;}
+.scroll_position li a{font-size:0; width: 100vw; height: 34vw;}
+.scroll_position li.on{background-color: #2E8B57;}
+.scroll_position_bg{position:absolute;bottom:12px;left:42%;padding:0 15px;z-index:380px;height:26px;border-radius:26px;}

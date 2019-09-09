@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册 - 趣呵茶_茶叶_茶具_保健茶_和茶网－铁观音－普洱茶－原产地 好品牌－网上购茶首选</title>
+    <link rel="shortcut icon" href="images/20190906170231_64693_32.ico" type="image/x-icon" />
+    <meta name="Keywords" content="趣呵茶、智能茶饮专家、专业的智能饮茶服务提供商、智能饮茶产业生态平台开创者。茶,茶叶,茶具,保健茶,普洱茶,铁观音,茶叶商城" />
+    <meta name="Description" content="趣呵茶、智能茶饮专家、专业的智能饮茶服务提供商、智能饮茶产业生态平台开创者。和茶网精选全国各地优质茶叶、茶具、保健茶等茶产品，并邀请知名专家进行质量把关，让用户方便快捷的购买到性价比高的茶叶、茶具、保健茶等茶产品，更有时尚热卖茶叶：铁观音、普洱茶。" />
+    <link href="http://www.hecha.cn/" rel="canonical" />
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/css/QuHeCha/Index/main.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/Share.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/savacookie.js"></script>
+    <script type="text/javascript" src="js/hhSwipe.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/home.css"> -->
+    <link href="http://www.hecha.cn/longjing_list.html" rel="canonical">
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/users.css">
+    <script type="text/javascript" src="http://www.hecha.cn/themes/hechav3/skin1/js/jquery-1.11.0.min.js"></script>-->
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript">
+        // $(function ()
+        // {
+        //     var isLogin = "";
+
+        //     $.post("http://www.hecha.cn/Handler/LoginHandler/UserHandler.ashx", function (e)
+        //     {
+        //         isLogin = e;
+        //         if (e != "false")
+        //         {
+        //             $("#loginModel").empty();
+        //             var l = '<a href="http://www.hecha.cn/cn/UserInfo/OrderList.html">' + e + '</a> 欢迎登录和茶网！<a href="http://www.hecha.cn/Handler/LoginHandler/OutLoginHandler.ashx" style="margin-left:13px">[退出登录]</a>';
+        //             $("#loginModel").append(l);
+        //             $("#myHechaLink").attr("href", "http://www.hecha.cn/cn/UserInfo/OrderList.html");
+        //         }
+        //         else
+        //         {
+        //             $("#myHechaLink").attr("href", "http://www.hecha.cn/cn/Login.html?returnUrl=UserInfo/OrderList.html");
+        //         }
+        //     });
+
+        // });
+
+        var domainurl = 'http://localhost/hecha.web/';    //生成时网址
+        var url = window.location.href; //运行时网址
+        if (url.indexOf(domainurl) < 0)
+        {   //如果生成时和运行时不一致
+            domainurl = "http://" + window.location.host;
+        }
+        saveCookie("siteid", '984eae3a-5eb1-4e80-8337-16ccdc6cdd2d', '', '/');
+    </script>
+
+    <style type="text/css">
+        .hc_lnav .allbtn ul
+        {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部 -->
+    <div class="top-pic">
+    <img src="http://www.hecha.cn/images/QuHeCha/Index/toppic.png">
+</div>
+<div class="top">
+    <div class="con clearfix">
+        <div class="fr">
+            <a href="http://www.hecha.cn/cn/UserInfo/OrderList.html" class="order-bg" id="myHechaLink">
+                <i class="order"><img src="http://www.hecha.cn/images/QuHeCha/Index/order.png"></i>我的订单
+            </a>
+            <i class="weChat"><img src="http://www.hecha.cn/images/QuHeCha/Index/wx.png"></i>服务热线：
+            <a>400-8899-379</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="con clearfix">
+        <div class="fl logo"><a href="taotao.html" target="_blank"><img src="http://www.hecha.cn/images/QuHeCha/Index/logo.png"></a></div>
+        <div class="fl brand"><img src="http://www.hecha.cn/images/QuHeCha/Index/brand.gif"></div>
+        <div class="fr goods-cart">
+            <i class="code"></i>
+            <a href="http://www.hecha.cn/cn/Cart.html">
+                <i class="cart"></i>
+                <span>购物车（<span id="cartCount"></span>）</span>
+            </a>
+        </div>
+    </div>
+</div>
+ 
+    <!-- 登录主体 -->
+    <div class="users_bg">
+        <div class="hc_main">
+            <div class="hc_reg">
+                <div class="left">
+                    <p class="img">
+                        <img id="BackImage" src="http://www.hecha.cn/themes/hechav3/skin1/images/users/login_show1.jpg">
+                    </p>
+                </div>
+                <div class="regbox">
+                    <div class="title">
+                        <ul>
+                            <li><a id="loginLink" href="denglu.html">登录和茶网</a></li>
+                            <li class="on"><a href="zhuce.html">新用户注册</a></li>
+                            <div class="clr">
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="list">
+                        <ul class="login">
+                            <li>
+                                <p class="ta">
+                                    登录名
+                                </p>
+                                <p class="ip">
+                                    <input name="LoginAccount" class="input" id="LoginAccount" type="text">
+                                </p>
+                                <p class="in">
+                                    <span id="loginaccount_notice">请输入你的账号</span>
+                                </p>
+                                <div class="clr">
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <p class="ta">
+                                    密&nbsp;&nbsp;码
+                                </p>
+                                <p class="ip">
+                                    <input name="password" class="input" id="PassWord" type="password">
+                                </p>
+                                <p class="in">
+                                    <span id="password_notice">6-16位数字和字母组成,区分大小写</span>
+                                </p>
+                                <div class="clr">
+                                </div>
+                            </li>
+                            <li>
+                                <p class="ta">
+                                    确认密码
+                                </p>
+                                <p class="ip">
+                                    <input name="AgainPassWord" class="input" id="AgainPassWord" type="password">
+                                </p>
+                                <p class="in">
+                                    <span id="conform_password_notice">请重复输入上面的密码</span>
+                                </p>
+                                <div class="clr">
+                                </div>
+                            </li>
+                            <li class="reginp1">
+                                <p class="ta">
+                                    &nbsp;
+                                </p>
+                                <p class="ip">
+                                    <input id="Register" name="" type="image" src="images/reg.png"
+                                           value="Submit" type="button">
+                                </p>
+                                 <div class="clr">
+                                </div>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://www.hecha.cn/js/LoginPage/RegisterPage.js" type="text/javascript"></script>
+    <script src="http://www.hecha.cn/js/Common/LoginValidate.js" type="text/javascript"></script>
+    <link href="http://www.hecha.cn/themes/hechaV2.5/skin/tm6/style/user6.css" rel="stylesheet" type="text/css" />
+    
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/css/quhecha/20180305/home.css">
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/list.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 1000px;
+            margin: 50px auto;
+        }
+        .top-pic{margin:0;}
+        .head{margin:0;}
+        .logo{margin:0 0 0 20px;}
+        .brand{margin:0 0 0 20px;}
+        .mg {
+            width: 80px;
+            height: 40px;
+        }
+
+        th {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+            height: 60px;
+        }
+
+        .remove {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="libs/bootstrap.js"></script>
+    <script src="libs/jquery.slim.js"></script>
+    <script src="libs/bootstrap.css"></script>
+    <script src="js/ajax+jsonp.js"></script>
+    <div class="top-pic">
+        <img src="images/toppic.png">
+    </div>
+    
+    <div class="head">
+            <div class="con clearfix">
+                <div class="fl logo"><a href="taotao.html" target="_blank"><img src="images/logo.png"></a></div>
+                <div class="fl brand"><img src="images/brand.gif"></div>
+                <div class="fr goods-cart" id="cartFlag">
+                    <div class="cart_step">
+                        <p class="step1" style="height: 55px;width: 482px;position: absolute;top: 25px;right: 0px;background-repeat: no-repeat;background-position: center center;z-index: 99;line-height: 300px;overflow: hidden;vertical-align: middle;">
+                        </p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <h2>购物车&emsp;<a href="taotao.html">返回购物</a></h2>
+    <div>
+        <table class="col-7 table table-bordered thead-inverse text-center">
+            <thead>
+                <tr>
+                    <th>选择商品</th>
+                    <th>商品样式</th>
+                    <th>名称</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>价格</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td><input type="checkbox" name="cb" /></td>
+                    <td>${}</td>
+                    <td>${}</td>
+                    <td>${}</td>
+                    <td><input type="number" value="${}" class="num" min=1></td>
+                    <td></td>
+                    <td>删除</td>
+                </tr> -->
+            </tbody>
+            <tfoot>
+                <th><input type="checkbox" class="qx" /></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="price"></th>
+                <th class="remove">清空购物车</th>
+            </tfoot>
+        </table>
+    </div>
+</body>
+<script src="libs/jquery.slim.js"></script>
+<script src="libs/popper.js"></script>
+<script src="libs/bootstrap.js"></script>
+<script src="js/ajax+jsonp.js"></script>
+<script>
+    class Car {
+        constructor() {
+            this.url = "http://localhost/quhecha/data/goods.json";
+            this.tbody = document.querySelector("tbody");
+            this.qx = document.querySelector('.qx');
+            this.remove = document.querySelector(".remove");
+            this.price = document.querySelector(".price");
+            this.money = 0;
+            this.load();
+            this.addEvent();
+        }
+        load() {
+            ajax({
+                url: this.url,
+                success: (res) => {
+                    this.res = JSON.parse(res);
+                    this.getLocal();
+                }
+            })
+        }
+        getLocal() {
+            this.goods = localStorage.getItem("goods") ? JSON.parse(localStorage.getItem("goods")) : [];
+            this.display()
+        }
+        display() {
+            var str = "";
+            for (var i = 0; i < this.res.length; i++) {
+                for (var j = 0; j < this.goods.length; j++) {
+                    if (this.res[i].goodsId == this.goods[j].id) {
+                        str += `<tr index="${this.res[i].goodsId}">
+                                    <td><input type="checkbox" class="cb" /></td>
+                                    <td><img class="center-block" src="${this.res[i].url}" class="mg"></td>
+                                    <td>${this.res[i].name}</td>
+                                    <td>${this.res[i].price}</td>
+                                    <td><input type="number" value="${this.goods[j].num}" class="num" min=1></td>
+                                    <td>${this.res[i].price*this.goods[j].num}</td>
+                                    <td class="delete">删除</td>
+                                </tr>`
+                    }
+                }
+            }
+            this.tbody.innerHTML = str;
+        }
+        addEvent() {
+            // console.log(this)
+            this.tbody.addEventListener("click", (eve) => {
+                var e = eve || window.event;
+                var tar = e.target || e.srcElement;
+                if (tar.className == "delete") {
+                    this.id = tar.parentNode.getAttribute("index");
+                    tar.parentNode.remove();
+                    this.setLocal((i) => {
+                        this.goods.splice(i, 1);
+                        this.setMoney();
+                    });
+                }
+                //复选框选中算价格
+                if (tar.className == 'cb') {
+                    this.td = tar.parentNode.parentNode.children;
+                    // console.log(this.td)//全是td的对象
+                    // console.log(this.td[0])//拥有input标签checked的那个td
+                    // console.log(this.td[0].children[0])//input的checked这个标签
+                    // console.log(this.td[0].children[0].checked);
+                    if (this.td[0].children[0].checked == true) {
+                        this.money += parseInt(this.td[5].innerHTML);
+                        // console.log(this.money)
+                        this.price.innerHTML = this.money;
+                    } else {
+                        this.qx.checked = false;
+                        this.money -= parseInt(this.td[5].innerHTML);
+                        this.price.innerHTML = this.money;
+                    }
+                }
+            });
+            this.tbody.addEventListener("input", (eve) => {
+                var e = eve || window.event;
+                var tar = e.target || e.srcElement;
+                if (tar.className == "num") {
+                    this.val = tar.value;
+                    this.id = tar.parentNode.parentNode.getAttribute("index");
+                    this.td = tar.parentNode.parentNode.children;
+                    // console.log(this.td)
+                    this.setLocal((i) => {
+                        this.goods[i].num = this.val;
+                        this.td[5].innerHTML = this.val * this.td[3].innerHTML;
+                        this.setMoney();
+                        // this.money += parseInt(this.val * this.td[3].innerHTML);
+                        // this.price.innerHTML = this.money;
+                    })
+                }
+            });
+            this.qx.addEventListener("click", (eve) => {
+                this.setMoney();
+            });
+            this.remove.onclick = () => {
+                var t = confirm("确认清空购物车吗?");
+                if (t) {
+                    localStorage.clear();
+                    this.getLocal();
+                }
+
+            }
+        }
+        setMoney() {
+            this.money = 0;
+            for (var i = 0; i < this.goods.length; i++) {
+                this.tbody.children[i].children[0].children[0].checked = this.qx.checked;
+                // console.log(this.tbody.children[i].children[5].innerHTML);
+                if (this.qx.checked) {
+                    this.money += parseInt(this.tbody.children[i].children[5].innerHTML);
+                }
+                this.price.innerHTML = this.money;
+                console.log(this.price.innerHTML)
+            }
+        }
+        setLocal(fn) {
+            for (var i = 0; i < this.goods.length; i++) {
+                if (this.goods[i].id == this.id) {
+                    fn(i);
+                }
+            }
+            localStorage.setItem("goods", JSON.stringify(this.goods));
+        }
+    }
+    new Car();
+</script>
+
+</html>

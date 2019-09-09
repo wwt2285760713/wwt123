@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="shortcut icon" href="images/20190906170231_64693_32.ico" type="image/x-icon" />
+    <meta name="Keywords" content="趣呵茶" />
+    <meta name="Description" content="趣呵茶" />
+    <link href="taotao.html" rel="canonical" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/Share.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/js/cookies.js"></script>
+    <script type="text/javascript" src="js/hhSwipe.js"></script>
+    
+<link rel="stylesheet" type="text/css" href="css/home1.css">
+
+
+
+    <link href="http://www.hecha.cn/longjing_list.html" rel="canonical" />
+<link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/users.css">
+    
+        <!--<script type="text/javascript" src="http://www.hecha.cn/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/themes/hechav3/skin1/js/jquery-1.11.0.min.js"></script>-->
+    <script type="text/javascript" src="http://www.hecha.cn/themes/hechav3/skin1/js/common.js"></script>
+<script type="text/javascript" src="http://www.hecha.cn/js/source.js"></script>
+    <script type="text/javascript">
+        $(function ()
+        {
+            var isLogin = "";
+
+            $.post("http://www.hecha.cn/Handler/LoginHandler/UserHandler.ashx", function (e)
+            {
+                isLogin = e;
+                if (e != "false")
+                {
+                    $("#loginModel").empty();
+                    var l = '<a href="http://www.hecha.cn/cn/UserInfo/OrderList.html">' + e + '</a> 欢迎登录和茶网！<a href="http://www.hecha.cn/Handler/LoginHandler/OutLoginHandler.ashx" style="margin-left:13px">[退出登录]</a>';
+                    $("#loginModel").append(l);
+                    $("#myHechaLink").attr("href", "http://www.hecha.cn/cn/UserInfo/OrderList.html");
+                }
+                else
+                {
+                    $("#myHechaLink").attr("href", "http://www.hecha.cn/cn/Login.html?returnUrl=UserInfo/OrderList.html");
+                }
+            });
+
+        });
+
+        var domainurl = 'http://localhost/hecha.web/';    //生成时网址
+        var url = window.location.href; //运行时网址
+        if (url.indexOf(domainurl) < 0)
+        {   //如果生成时和运行时不一致
+            domainurl = "http://" + window.location.host;
+        }
+        saveCookie("siteid", '984eae3a-5eb1-4e80-8337-16ccdc6cdd2d', '', '/');
+    </script>
+
+    <style type="text/css">
+        .hc_lnav .allbtn ul
+        {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部 -->
+    <div class="top-pic">
+    <img src="images/toppic.png">
+</div>
+<div class="top">
+    <div class="con clearfix">
+        
+        <div class="fr">
+            <a href="http://www.hecha.cn/cn/UserInfo/OrderList.html" class="order-bg" id="myHechaLink">
+                <i class="order"><img src="http://www.hecha.cn/images/QuHeCha/Index/order.png"></i>我的订单
+            </a>
+            <i class="weChat"><img src="images/wx.png"></i>服务热线：
+            <a>188-6042-4332</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="con clearfix">
+        <div class="fl logo"><a href="taotao.html" target="_blank"><img src="images/logo.png"></a></div>
+        <div class="fl brand"><img src="images/brand.gif"></div>
+        <div class="fr goods-cart">
+            <i class="code"></i>
+            <a href="Cart.html">
+                <i class="cart"></i>
+                <span>购物车（<span id="cartCount"></span>）</span>
+            </a>
+        </div>
+    </div>
+</div>
+  
+    <!-- 登录主体 -->
+    <div class="users_bg">
+        <div class="hc_main">
+            <div class="hc_reg">
+                <div class="left">
+                    <p class="img">
+                        <img id="BackImage" src="images/login_show1.jpg">
+                    </p>
+                </div>
+                <div class="regbox">
+                    <div class="title">
+                        <ul>
+                            <li class="on"><a href="denglu.html">登录和茶网</a></li>
+                            <li><a href="zhuce.html" id="RegLink">新用户注册</a></li>
+                            <div class="clr">
+                            </div>
+                        </ul>
+                    </div>
+                    <!--登录FORM-->
+                    <div class="list">
+                        <!--登录处理的AJAX-->
+                        <!-- <form name="formLogin" action="member.php" method="post" onsubmit="return userLogin()">-->
+                        <ul class="reg">
+                            <li>
+                                <p class="ta">
+                                    登录名
+                                </p>
+                                <p class="ip">
+                                    <input id="txtUserName" name="txtUserName" type="text" class="input">
+                                </p>
+                                <p class="in"><span>请输入您注册的登录名<!-- 邮箱 / 手机号--></span></p>
+                                <div class="clr">
+                                </div>
+                            </li>
+                            <li>
+                                <p class="ta">
+                                    密&nbsp;&nbsp;码
+                                </p>
+                                <p class="ip">
+                                    <input id="txtPassword" name="txtPassword" type="password" class="input">
+                                </p>
+                               
+                                <div class="clr">
+                                </div>
+                            </li>
+                            <li>
+                                <p class="ta">
+                                    &nbsp;
+                                </p>
+                                <p class="ip">
+                                    <input id="Submit" name="" type="image" src="http://www.hecha.cn/themes/hechav3/skin1/images/users/login.png"
+                                           value="Submit">
+                                </p>
+                                <div class="clr">
+                                </div>
+                            </li>
+                            
+                        </ul>
+                        
+                        <input name="act" value="act_login" type="hidden">
+                        <input name="back_act" value="http://www.hecha.cn/" type="hidden">
+                        <!-- </form>-->
+                    </div>
+                </div>
+                <div class="clr">
+                </div>
+            </div>
+            <div class="clr">
+            </div>
+        </div>
+    </div>
+    <script src="http://www.hecha.cn/js/LoginPage/LoginPage.js" type="text/javascript"></script>
+   
+</body>
+</html>

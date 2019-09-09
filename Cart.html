@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车 - 趣呵茶_茶叶_茶具_保健茶_和茶网－铁观音－普洱茶－原产地 好品牌－网上购茶首选</title>
+    <link rel="shortcut icon" href="images/20190906170231_64693_32.ico" type="image/x-icon" />
+    <meta name="Keywords" content="趣呵茶、智能茶饮专家、专业的智能饮茶服务提供商、智能饮茶产业生态平台开创者。茶,茶叶,茶具,保健茶,普洱茶,铁观音,茶叶商城" />
+    <meta name="Description" content="趣呵茶、智能茶饮专家、专业的智能饮茶服务提供商、智能饮茶产业生态平台开创者。和茶网精选全国各地优质茶叶、茶具、保健茶等茶产品，并邀请知名专家进行质量把关，让用户方便快捷的购买到性价比高的茶叶、茶具、保健茶等茶产品，更有时尚热卖茶叶：铁观音、普洱茶。" />
+    <link href="http://www.hecha.cn/" rel="canonical" />
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/js/plugin/lunbo/layout.css">
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/css/QuHeCha/Index/main.css">
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/list.css">
+    <script type="text/javascript" src="http://www.hecha.cn/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/js/Common/Share.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/js/common.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/js/cookies.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/js/plugin/lunbo/hhSwipe.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/extend.css">
+<link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/home.css">
+
+
+
+    
+    
+        <!--<script type="text/javascript" src="http://www.hecha.cn/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="http://www.hecha.cn/themes/hechav3/skin1/js/jquery-1.11.0.min.js"></script>-->
+    <script type="text/javascript" src="http://www.hecha.cn/themes/hechav3/skin1/js/common.js"></script>
+<script type="text/javascript" src="http://www.hecha.cn/js/source.js"></script>
+    <script type="text/javascript">
+        $(function ()
+        {
+            var isLogin = "";
+
+            $.post("http://www.hecha.cn/Handler/LoginHandler/UserHandler.ashx", function (e)
+            {
+                isLogin = e;
+                if (e != "false")
+                {
+                    $("#loginModel").empty();
+                    var l = '<a href="http://www.hecha.cn/cn/UserInfo/OrderList.html">' + e + '</a> 欢迎登录和茶网！<a href="http://www.hecha.cn/Handler/LoginHandler/OutLoginHandler.ashx" style="margin-left:13px">[退出登录]</a>';
+                    $("#loginModel").append(l);
+                    $("#myHechaLink").attr("href", "http://www.hecha.cn/cn/UserInfo/OrderList.html");
+                }
+                else
+                {
+                    $("#myHechaLink").attr("href", "http://www.hecha.cn/cn/Login.html?returnUrl=UserInfo/OrderList.html");
+                }
+            });
+
+        });
+
+        var domainurl = 'http://localhost/hecha.web/';    //生成时网址
+        var url = window.location.href; //运行时网址
+        if (url.indexOf(domainurl) < 0)
+        {   //如果生成时和运行时不一致
+            domainurl = "http://" + window.location.host;
+        }
+        saveCookie("siteid", '984eae3a-5eb1-4e80-8337-16ccdc6cdd2d', '', '/');
+    </script>
+
+    <style type="text/css">
+        .hc_lnav .allbtn ul
+        {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部 -->
+    <div class="top-pic">
+    <img src="http://www.hecha.cn/images/QuHeCha/Index/toppic.png">
+</div>
+<div class="top">
+    <div class="con clearfix">
+        <div class="fl" id="loginModel">
+            <a href="http://www.hecha.cn/cn/register.html" target="_blank" id="registerLink">免费注册</a>
+            <a href="http://www.hecha.cn/cn/login.html" class="login" target="_blank" id="loginLink">登陆</a>
+        </div>
+        <div class="fr">
+            <a href="http://www.hecha.cn/cn/UserInfo/OrderList.html" class="order-bg" id="myHechaLink">
+                <i class="order"><img src="http://www.hecha.cn/images/QuHeCha/Index/order.png"></i>我的订单
+            </a>
+            <i class="weChat"><img src="http://www.hecha.cn/images/QuHeCha/Index/wx.png"></i>服务热线：
+            <a>400-8899-379</a>
+        </div>
+    </div>
+</div>
+<div class="head">
+    <div class="con clearfix">
+        <div class="fl logo"><a href="http://www.hecha.cn" target="_blank"><img src="http://www.hecha.cn/images/QuHeCha/Index/logo.png"></a></div>
+        <div class="fl brand"><img src="http://www.hecha.cn/images/QuHeCha/Index/brand.gif"></div>
+        <div class="fl search"></div>
+        <div class="fr goods-cart" id="cartFlag">
+            <div class="cart_step">
+                <p class="step1" style="height: 55px;width: 482px;position: absolute;top: 25px;right: 0px;background-repeat: no-repeat;background-position: center center;z-index: 99;line-height: 300px;overflow: hidden;vertical-align: middle;">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .cart_step p
+    {
+        height: 55px;
+        width: 482px;
+        position: absolute;
+        top: 25px;
+        right: 0px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        z-index: 99;
+        line-height: 300px;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+</style>
+    
+    <!-- 主页面 -->
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/cart.css">
+    <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/themes/hechav3/skin1/style/goods.css">
+    <script src="http://www.hecha.cn/themes/hechav3/skin1/js/jquery-migrate-1.2.1.min.js"></script>
+    <script language="javascript">
+
+        $(function ()
+        {
+            GetShoppingProductList();
+            GetGift();
+            GetLottery();
+            GetRedemption();
+            getUserFavorite();
+        });
+
+    </script>
+
+    <div class="cart_bg">
+        <div class="hc_main">
+            <div class="hc_cart">
+                <div class="title">
+                    <em><a href="#" class="buy">结算</a></em> <em>已选商品(不含运费)：<strong>¥<span id="totalprice"></span></strong></em>
+                    <h3>
+                        我的购物车
+                    </h3>
+                    <div class="clr">
+                    </div>
+                </div>
+                <div class="cart_list">
+                    <ul>
+                        <li class="txa">
+                            <p class="ck">
+                                选择
+                            </p>
+                            <p class="img">
+                                &nbsp;
+                            </p>
+                            <p class="txt">
+                                &nbsp;
+                            </p>
+                            <p class="mpri">
+                                单价(元)
+                            </p>
+                            <p class="save">
+                                优惠(元)
+                            </p>
+                            <p class="sunm">
+                                数量
+                            </p>
+                            <p class="pri">
+                                金额(元)
+                            </p>
+                            <p class="st">
+                                操作
+                            </p>
+                            <div class="clr">
+                            </div>
+                        </li>
+                        <div id="ShoppingCartList">
+                        </div>
+                        <div id="GiftList">
+                        </div><!-- 赠品-->
+                        <div id="LotteryGoodsList">
+                        </div><!-- 抽奖奖品-->
+
+                        <li class="txc">
+                            <p class="ck">
+                                <input name="" type="checkbox" value="" onclick="SelectAll(this.checked);">
+                                全选
+                            </p>
+                            <p class="st">
+                                <a href="javascript:DeleteChecked();"><span class="del">X</span> <strong>删除全部</strong></a>
+                            </p>
+                            <div class="clr">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clr line10">
+                </div>
+                <div class="pribox">
+                    <div id="redemption">
+                    </div>
+                    <div class="rbox">
+                        <p class="pri">
+                            ¥<span id="pp">0</span>
+                        </p>
+                        <p class="tx">
+                            商品总价(不含运费)：
+                        </p>
+                    </div>
+                    <div class="clr">
+                    </div>
+                </div>
+            </div>
+            <div class="clr line15">
+            </div>
+            <div class="cart_buy">
+                <p class="back">
+                    <a href="taotao.html" target="_blank">继续购物</a>
+                </p>
+                <p class="buy">
+                    <a href="javascript:Checkout();">去结算</a>
+                </p>
+                <div class="clr">
+                </div>
+            </div>
+            <div class="clr line15">
+            </div>
+        </div>
+       
+        <div class="clr line15">
+        </div>
+    </div>
+
+
+    <script src="http://www.hecha.cn/js/ShoppingCart/Cart.js" type="text/javascript"></script>
+    <script src="http://www.hecha.cn/themes/hechav3/skin1/js/plus.cart.js"></script>
+    <input type="hidden" id="veuseremail" value="" />
+   
+<script type="text/javascript"> var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5929d4f83ef0b1fad3dd9365bf2c00b4' type='text/javascript'%3E%3C/script%3E")) </script>
+<span style="display: none">
+    <script type="text/javascript">  var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1255383675'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255383675' type='text/javascript'%3E%3C/script%3E"));</script>
+</span>
+</body>
+</html>
