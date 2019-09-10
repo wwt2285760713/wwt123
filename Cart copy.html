@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="http://www.hecha.cn/css/quhecha/20180305/home.css">
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/list.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/list.css"> -->
     <style>
         * {
             margin: 0;
@@ -47,8 +47,8 @@
 </head>
 
 <body>
-    <script src="libs/bootstrap.js"></script>
-    <script src="libs/jquery.slim.js"></script>
+    <!-- <script src="libs/bootstrap.js"></script> -->
+    <!-- <script src="libs/jquery.slim.js"></script> -->
     <script src="libs/bootstrap.css"></script>
     <script src="js/ajax+jsonp.js"></script>
     <div class="top-pic">
@@ -57,7 +57,7 @@
     
     <div class="head">
             <div class="con clearfix">
-                <div class="fl logo"><a href="taotao.html" target="_blank"><img src="images/logo.png"></a></div>
+                <div class="fl logo"><a href="taotao copy.html" target="_blank"><img src="images/logo.png"></a></div>
                 <div class="fl brand"><img src="images/brand.gif"></div>
                 <div class="fr goods-cart" id="cartFlag">
                     <div class="cart_step">
@@ -67,7 +67,7 @@
                 </div>
             </div>
     </div>
-    <h2>购物车&emsp;<a href="taotao.html">返回购物</a></h2>
+    <h2>车购物&emsp;<a href="taotao copy.html">购物</a></h2>
     <div>
         <table class="col-7 table table-bordered thead-inverse text-center">
             <thead>
@@ -124,6 +124,7 @@
             ajax({
                 url: this.url,
                 success: (res) => {
+                    // console.log(res)
                     this.res = JSON.parse(res);
                     this.getLocal();
                 }
@@ -131,26 +132,29 @@
         }
         getLocal() {
             this.goods = localStorage.getItem("goods") ? JSON.parse(localStorage.getItem("goods")) : [];
+            // console.log(this.goods)
             this.display()
         }
         display() {
             var str = "";
             for (var i = 0; i < this.res.length; i++) {
                 for (var j = 0; j < this.goods.length; j++) {
+                   
                     if (this.res[i].goodsId == this.goods[j].id) {
                         str += `<tr index="${this.res[i].goodsId}">
                                     <td><input type="checkbox" class="cb" /></td>
-                                    <td><img class="center-block" src="${this.res[i].url}" class="mg"></td>
+                                    <td><img class="center-block" src="${this.res[i].url}" class="mg" style="width:100px;height:50px"></td>
                                     <td>${this.res[i].name}</td>
                                     <td>${this.res[i].price}</td>
-                                    <td><input type="number" value="${this.goods[j].num}" class="num" min=1></td>
-                                    <td>${this.res[i].price*this.goods[j].num}</td>
+                                    <td><input type="number" value="${this.goods[j].val}" class="num" min=1></td>
+                                    <td>${this.res[i].price*this.goods[j].val}</td>
                                     <td class="delete">删除</td>
                                 </tr>`
                     }
                 }
             }
             this.tbody.innerHTML = str;
+            
         }
         addEvent() {
             // console.log(this)
@@ -159,6 +163,7 @@
                 var tar = e.target || e.srcElement;
                 if (tar.className == "delete") {
                     this.id = tar.parentNode.getAttribute("index");
+                    // console.log(this.id)
                     tar.parentNode.remove();
                     this.setLocal((i) => {
                         this.goods.splice(i, 1);
@@ -173,13 +178,13 @@
                     // console.log(this.td[0].children[0])//input的checked这个标签
                     // console.log(this.td[0].children[0].checked);
                     if (this.td[0].children[0].checked == true) {
-                        this.money += parseInt(this.td[5].innerHTML);
+                        this.money += parseInt(this.td[5].innerText);
                         // console.log(this.money)
-                        this.price.innerHTML = this.money;
+                        this.price.innerText = this.money;
                     } else {
                         this.qx.checked = false;
-                        this.money -= parseInt(this.td[5].innerHTML);
-                        this.price.innerHTML = this.money;
+                        this.money -= parseInt(this.td[5].innerText);
+                        this.price.innerText = this.money;
                     }
                 }
             });
@@ -192,8 +197,10 @@
                     this.td = tar.parentNode.parentNode.children;
                     // console.log(this.td)
                     this.setLocal((i) => {
-                        this.goods[i].num = this.val;
-                        this.td[5].innerHTML = this.val * this.td[3].innerHTML;
+                        this.goods[i].val = this.val;
+                        console.log(this.td[3])
+                        console.log(this.td[3].innerText,this.val)
+                        this.td[5].innerText = parseInt(this.val) * parseInt(this.td[3].innerText);
                         this.setMoney();
                         // this.money += parseInt(this.val * this.td[3].innerHTML);
                         // this.price.innerHTML = this.money;
@@ -218,10 +225,10 @@
                 this.tbody.children[i].children[0].children[0].checked = this.qx.checked;
                 // console.log(this.tbody.children[i].children[5].innerHTML);
                 if (this.qx.checked) {
-                    this.money += parseInt(this.tbody.children[i].children[5].innerHTML);
+                    this.money += parseInt(this.tbody.children[i].children[5].innerText);
                 }
-                this.price.innerHTML = this.money;
-                console.log(this.price.innerHTML)
+                this.price.innerText = this.money;
+                // console.log(this.price.innerHTML)
             }
         }
         setLocal(fn) {

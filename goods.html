@@ -25,14 +25,14 @@
     <div class="top">
         <div class="con clearfix">
             <div class="fl" id="loginModel">
-                <a href="http://www.hecha.cn/cn/register.html" target="_blank" id="registerLink">注册</a>
-                <a href="http://www.hecha.cn/cn/login.html" class="login" target="_blank" id="loginLink">登陆</a>
+                <a href="zhuce.html" target="_blank" id="registerLink">注册</a>
+                <a href="denglu.html" class="login" target="_blank" id="loginLink">登陆</a>
             </div>
             <div class="fr">
                 <a href="http://www.hecha.cn/cn/UserInfo/OrderList.html" class="order-bg" id="myHechaLink">
-                    <i class="order"><img src="http://www.hecha.cn/images/QuHeCha/Index/order.png"></i>我的订单
+                    <i class="order"><img src="images/order.png"></i>我的订单
                 </a>
-                <i class="weChat"><img src="http://www.hecha.cn/images/QuHeCha/Index/wx.png"></i>服务热线：
+                <i class="weChat"><img src="images/wx.png"></i>服务热线：
                 <a>188-6042-4332</a>
             </div>
         </div>
@@ -85,31 +85,23 @@
                             我要购买：
                         </p>
                         <div class="goods_inp">
-                            <input type="number" style="width:70px">
+                            <input type="number" style="width:70px" min="1" value="1" class="inp">
                         </div>
                         <p>
                             件
                         </p>
-                        <p class="goods_inp_info">
+                        <!-- <p class="goods_inp_info">
                             <span style="display: none;">最多只能购买99件</span>
-                        </p>
+                        </p> -->
                     </li>
                     <!--立即购买-->
                     <li class="buy" id="nowbuy">
-                        <a id="NowShop" onclick="return btnAddd_ToCart('9832dfa9-9abd-4d85-9904-8c1420d21787');"
-                            target="_blank" href="http://www.hecha.cn/cn/Cart.html">
-                            <img src="http://www.hecha.cn/themes/hechav3/skin1/images/home/goodsinfo_buy1.png"
-                                style="width:163px;height:35px;">
+                        <a id="NowShop" target="_blank" href="Cart copy.html">
+                            <img src="images/buy1.png"
+                                style="width:163px;height:35px;" class="btn">
                         </a>
                     </li>
-                    <!--加入购物车-->
-                    <li class="buy" id="nowcart">
-                        <a id="AddShopCart" onclick="return btnAddd_ToCart('9832dfa9-9abd-4d85-9904-8c1420d21787');"
-                            target="_blank" href="http://www.hecha.cn/cn/Cart.html">
-                            <img src="http://www.hecha.cn/themes/hechav3/skin1/images/home/goodsinfo_buy2.png"
-                                style="width:163px;height:35px;">
-                        </a>
-                    </li>
+                    
                     <div class="clear">
                     </div>
                 </ul>
@@ -144,12 +136,14 @@
                 this.url = "http://localhost/quhecha/data/goods.json";
                 this.Img = document.getElementsByClassName("Img")[0]
                 this.emailkc=document.getElementById("emailkc")
+                this.nowbuy=document.getElementById("nowbuy")
+                this.inp=document.getElementsByClassName("inp")[0]
                 this.t4=document.getElementsByClassName("t4")[0]
                 this.gid = window.location.href.split('?')[1];
-                console.log(this.gid);
+                // console.log(this.gid);
                 this.load();
                 // 1.准备绑定点击事件
-                this.addEvent();
+                this.addEvent(this.gid);
             }
             load() {
                 var that = this;
@@ -174,22 +168,26 @@
 
                     }
                 }
-                console.log(this.bigimg)
+                // console.log(this.bigimg)
                 str += `<img src="${this.goods.url}" class="jqzoom" height="380" width="380" alt="" style="cursor: crosshair;">`;
                 this.Img.innerHTML = str;
                 str1+=`${this.goods.name}`
                 this.emailkc.innerHTML=str1
-                str2+=`和茶价${this.goods.price}￥`
+                str2+=`和茶价${this.goods.price}`
                 this.t4.innerHTML=str2
             }
-            addEvent() {
+            addEvent(ID) {
+                // console.log(ID)
                 var that = this;
-                this.box1.addEventListener("click", function (eve) {
+                this.nowbuy.addEventListener("click", function (eve) {
                     var e = eve || window.event;
                     var target = e.target || e.srcElement;
                     if (target.className == "btn") {
                         // 2.提前找到点击商品的唯一的id
-                        that.id = target.parentNode.getAttribute("index");
+                        that.id = ID;
+                        that.val=that.inp.value
+                        // console.log(that.val)
+                        // console.log(that.id)
                         // 3.准备存储localstorage
                         that.setLocal();
                     }
@@ -197,39 +195,50 @@
             }
             setLocal() {
 
-                // 数据的格式：[{id:,num:,},{},{}]
+          
                 // 先读
                 this.goods = localStorage.getItem("goods") ? JSON.parse(localStorage.getItem("goods")) : [];
-
-                if (this.goods.length < 1) {
-                    // 第一次存，直接存
+                if(this.goods.length<1){
+                    this.goods.push({
+                        id:this.id,
+                        val:this.val
+                    })
+                }else{
+                // 准备存重复数据的索引
+                var i;
+                // 利用some遍历数组，检测是否有重复数据
+                var o = this.goods.some((key, index) => {
+                    // 每次将索引，保存出来，
+                    i = index;
+                    // 如果id重复了，返回true，同时some自动停止
+                    return key.id == this.id;
+                })
+                // 如果some的返回值为true，表示肯定有一个值为true，那么表示有重复
+                if (o) {
+                    this.goods[i].val=this.val
+                } else { //否则没有重复，再新增数据
                     this.goods.push({
                         id: this.id,
-                        num: 1
+                        val:this.val 
                     })
-                } else {
-                    // 准备存重复数据的索引
-                    var i;
-                    // 利用some遍历数组，检测是否有重复数据
-                    var o = this.goods.some((val, index) => {
-                        // 每次将索引，保存出来，
-                        i = index;
-                        // 如果id重复了，返回true，同时some自动停止
-                        return val.id == this.id;
-                    })
-                    // 如果some的返回值为true，表示肯定有一个值为true，那么表示有重复
-                    if (o) {
-                        this.goods[i].num++
-                    } else { //否则没有重复，再新增数据
-                        this.goods.push({
-                            id: this.id,
-                            num: 1
-                        })
-                    }
-
                 }
-
-                localStorage.setItem("goods", JSON.stringify(this.goods));
+                // var onoff = true;
+                // for(var i=0;i<this.goods.length;i++){
+                //     if(this.goods[i].id === this.id){
+                //         // 存老的，老数据+1
+                //         this.goods[i].num ++;
+                //         onoff = false;
+                //     }
+                // }
+                // if(onoff){
+                //     // 存新的，增加新数据
+                //     this.goods.push({
+                //         id:this.id,
+                //         num:1
+                //     })
+                // }
+            }
+                 localStorage.setItem("goods", JSON.stringify(this.goods));
             }
         }
 
