@@ -56,20 +56,26 @@
 
     <!-- 主页面 -->
 
-    <div class="hc_main">
+    <div class="hc_main" style="position: relative">
         <div class="hc_goodsinfo">
             <div class="imgbox">
-                <div style="position: relative;" class="bigimg">
-                        <a style="cursor: crosshair; display: block; position: relative; height: 380px; width: 380px;
+                <div style="position: relative;" class="bigimg" id="small" style="position: absolute">
+                    <a style="cursor: crosshair; display: block; position: relative; height: 380px; width: 380px;
                           outline-style: none; text-align:center ; border:1px solid #ccc" target="_blank" class="Img">
-                        </a>
+                    </a>
+                    <p id="move"
+                        style="width:100px;height:100px;position:absolute;left:0;top:0;background:black;opacity:0.4;display:none;">
+                    </p>
+                </div>
+                <div id="big"
+                    style="width:380px;height:380px;position: absolute;float:left;overflow: hidden;z-index: 99;display:none; ">
                 </div>
             </div>
             <div class="txtbox" data="goods_info" alt="soldout">
                 <input type="hidden" id="ProductBandCategory"
                     value="9832dfa9-9abd-4d85-9904-8c1420d21787_e59acaf7-4bd2-4de3-9791-c9145a7236d2_c64628f6-b0c3-4093-a91c-5893bd809113_9312da1e-18f6-4cfc-ab8e-ea2c81a5d71d" />
                 <h1 id="lgoodname">
-                     <span id="emailkc"></span>
+                    <span id="emailkc"></span>
                     <input id="pdataID" type="hidden" value="9832dfa9-9abd-4d85-9904-8c1420d21787" />
                     <input id="pID" type="hidden" value="d78e8b40-55e2-49b5-ae6f-9be0365d3d52" />
                 </h1>
@@ -97,11 +103,10 @@
                     <!--立即购买-->
                     <li class="buy" id="nowbuy">
                         <a id="NowShop" target="_blank" href="Cart copy.html">
-                            <img src="images/buy1.png"
-                                style="width:163px;height:35px;" class="btn">
+                            <img src="images/buy1.png" style="width:163px;height:35px;" class="btn">
                         </a>
                     </li>
-                    
+
                     <div class="clear">
                     </div>
                 </ul>
@@ -128,6 +133,7 @@
         </div>
     </div>
 </body>
+
 <script>
 
     (function () {
@@ -135,10 +141,11 @@
             constructor() {
                 this.url = "http://localhost/quhecha/data/goods.json";
                 this.Img = document.getElementsByClassName("Img")[0]
-                this.emailkc=document.getElementById("emailkc")
-                this.nowbuy=document.getElementById("nowbuy")
-                this.inp=document.getElementsByClassName("inp")[0]
-                this.t4=document.getElementsByClassName("t4")[0]
+                this.emailkc = document.getElementById("emailkc")
+                this.nowbuy = document.getElementById("nowbuy")
+                this.big = document.getElementById("big")
+                this.inp = document.getElementsByClassName("inp")[0]
+                this.t4 = document.getElementsByClassName("t4")[0]
                 this.gid = window.location.href.split('?')[1];
                 // console.log(this.gid);
                 this.load();
@@ -160,8 +167,8 @@
             display() {
                 // console.log(this.res);
                 var str = "";
-                var str1="";
-                var str2="";
+                var str1 = "";
+                var str2 = "";
                 for (var i = 0; i < this.res.length; i++) {
                     if (this.res[i].goodsId == this.gid) {
                         this.goods = this.res[i]
@@ -169,12 +176,15 @@
                     }
                 }
                 // console.log(this.bigimg)
-                str += `<img src="${this.goods.url}" class="jqzoom" height="380" width="380" alt="" style="cursor: crosshair;">`;
+                str += `<img src="${this.goods.url}" class="jqzoom" height="380" width="380" style="cursor: crosshair;opacity:0.5">`;
                 this.Img.innerHTML = str;
-                str1+=`${this.goods.name}`
-                this.emailkc.innerHTML=str1
-                str2+=`和茶价${this.goods.price}`
-                this.t4.innerHTML=str2
+                str = "";
+                str += `<img id="look_girl" src="${this.goods.url}" style="position:absolute;width:600px;height:600px;" >`;
+                this.big.innerHTML = str;
+                str1 += `${this.goods.name}`
+                this.emailkc.innerHTML = str1
+                str2 += `和茶价${this.goods.price}`
+                this.t4.innerHTML = str2
             }
             addEvent(ID) {
                 // console.log(ID)
@@ -185,7 +195,7 @@
                     if (target.className == "btn") {
                         // 2.提前找到点击商品的唯一的id
                         that.id = ID;
-                        that.val=that.inp.value
+                        that.val = that.inp.value
                         // console.log(that.val)
                         // console.log(that.id)
                         // 3.准备存储localstorage
@@ -195,55 +205,112 @@
             }
             setLocal() {
 
-          
+
                 // 先读
                 this.goods = localStorage.getItem("goods") ? JSON.parse(localStorage.getItem("goods")) : [];
-                if(this.goods.length<1){
-                    this.goods.push({
-                        id:this.id,
-                        val:this.val
-                    })
-                }else{
-                // 准备存重复数据的索引
-                var i;
-                // 利用some遍历数组，检测是否有重复数据
-                var o = this.goods.some((key, index) => {
-                    // 每次将索引，保存出来，
-                    i = index;
-                    // 如果id重复了，返回true，同时some自动停止
-                    return key.id == this.id;
-                })
-                // 如果some的返回值为true，表示肯定有一个值为true，那么表示有重复
-                if (o) {
-                    this.goods[i].val=this.val
-                } else { //否则没有重复，再新增数据
+                if (this.goods.length < 1) {
                     this.goods.push({
                         id: this.id,
-                        val:this.val 
+                        val: this.val
                     })
+                } else {
+                    // 准备存重复数据的索引
+                    var i;
+                    // 利用some遍历数组，检测是否有重复数据
+                    var o = this.goods.some((key, index) => {
+                        // 每次将索引，保存出来，
+                        i = index;
+                        // 如果id重复了，返回true，同时some自动停止
+                        return key.id == this.id;
+                    })
+                    // 如果some的返回值为true，表示肯定有一个值为true，那么表示有重复
+                    if (o) {
+                        this.goods[i].val = this.val
+                    } else { //否则没有重复，再新增数据
+                        this.goods.push({
+                            id: this.id,
+                            val: this.val
+                        })
+                    }
+                    // var onoff = true;
+                    // for(var i=0;i<this.goods.length;i++){
+                    //     if(this.goods[i].id === this.id){
+                    //         // 存老的，老数据+1
+                    //         this.goods[i].num ++;
+                    //         onoff = false;
+                    //     }
+                    // }
+                    // if(onoff){
+                    //     // 存新的，增加新数据
+                    //     this.goods.push({
+                    //         id:this.id,
+                    //         num:1
+                    //     })
+                    // }
                 }
-                // var onoff = true;
-                // for(var i=0;i<this.goods.length;i++){
-                //     if(this.goods[i].id === this.id){
-                //         // 存老的，老数据+1
-                //         this.goods[i].num ++;
-                //         onoff = false;
-                //     }
-                // }
-                // if(onoff){
-                //     // 存新的，增加新数据
-                //     this.goods.push({
-                //         id:this.id,
-                //         num:1
-                //     })
-                // }
-            }
-                 localStorage.setItem("goods", JSON.stringify(this.goods));
+                localStorage.setItem("goods", JSON.stringify(this.goods));
             }
         }
 
         new Data();
     })();
+
+</script>
+<script>
+    // 1 获取节点
+    var smallObj = document.getElementById('small');
+    var moveObj = document.getElementById('move');
+    var bigObj = document.getElementById('big');
+    var girlObj = bigObj.children[0]
+    // 2 给sall绑定鼠标移动事件
+    smallObj.onmousemove = (eve) => {
+        var e = eve || window.event
+        //3.获取鼠标实时位置
+        var x = e.clientX;
+        var y = e.clientY;
+        // console.log(x,y)
+        //4.获取小滑块所能运动的left和top值
+        var moveLeft = x - smallObj.offsetLeft - moveObj.offsetWidth/2
+        var moveTop = y - smallObj.offsetTop - moveObj.offsetHeight-180
+        // console.log(moveLeft,moveTop)
+        // console.log(mo   veObj.offsetWidth,smallObj.offsetLeft)
+        //设置左边界
+        if (moveLeft < 0) moveLeft = 0;
+        //设置右边界
+        var endLeft = smallObj.offsetWidth - moveObj.offsetWidth;
+        if (moveLeft > endLeft) moveLeft = endLeft;
+        //设置上边界
+        if (moveTop < 0) moveTop = 0;
+        //设置下边界
+        var endTop = smallObj.offsetHeight - moveObj.offsetHeight
+        if (moveTop > endTop) moveTop = endTop;
+        //6.设置小滑块实时的位置
+        moveObj.style.left = moveLeft + 'px'
+        moveObj.style.top = moveTop + 'px'
+        //7.让小滑块显示出来
+        moveObj.style.display = 'block';
+        //8.让大滑块显示出来
+        bigObj.style.display = 'block'
+        //9.让bigObj在smallObj的右侧显示出来
+        bigObj.style.left = smallObj.offsetLeft + smallObj.offsetWidth + 20 + 'px';
+        bigObj.style.top = smallObj.offsetTop + 'px';
+        girlObj = bigObj.children[0];
+        // console.log(girlObj);
+        // console.log(smallObj.offsetWidth, moveObj.offsetWidth, bigObj.offsetWidth, girlObj.offsetWidth)
+        var girlLeft = (moveLeft / (smallObj.offsetWidth - moveObj.offsetWidth)) * (bigObj.offsetWidth - girlObj.offsetWidth)
+        var girlTop = (moveTop / (smallObj.offsetHeight - moveObj.offsetHeight)) * (bigObj.offsetWidth - girlObj.offsetHeight)
+        console.log(girlLeft, girlTop)
+
+        girlObj.style.left = girlLeft + 'px';
+        girlObj.style.top = girlTop + 'px';
+
+    }
+    smallObj.onmouseleave = () => {
+        //让小滑块和bigObj消失；
+        moveObj.style.display = 'none';
+        bigObj.style.display = 'none';
+    }
+
 
 </script>
 
