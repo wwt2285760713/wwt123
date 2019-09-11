@@ -131,7 +131,7 @@
 </div>
 
 </body>
-<script>
+<!-- <script>
     var user = document.getElementById("user");
     var pass = document.getElementById("pass");
     var pass2 = document.getElementById("pass2");
@@ -221,55 +221,139 @@
         }
     }
 
-</script>
+</script> -->
 <script>
 class Zhuce{
-        constructor(){
-            this.user = document.getElementById("user")
-            this.pass = document.getElementById("pass")
-            this.btn = document.getElementById("btn")
-            this.span = document.querySelector("#span")
+    constructor(){
+        this.user = document.getElementById("user")
+        this.pass = document.getElementById("pass")
+        this.pass2 = document.getElementById("pass2");
+        this.btn = document.getElementById("btn")
+        this.span = document.querySelector("#span")
+        this.x = false;
+        this.y = false;
+        this.z = false;
+        this.a = 0;
+        this.b = 0;
+        this.c = 0;
 
-            this.addEvent()
-        }
-        addEvent(){
-            var that = this;
-            this.btn.onclick = function(){
-                that.setLocal()
+        this.addEvent()
+    }
+    addEvent(){
+        var that = this;
+        this.user.onblur = function(){
+            //用户名的正则
+            // console.log(1)
+            var reg = /^[\w\-\u2E80-\u9FFF]{6,20}$/
+            // console.log(this.value)
+            if(reg.test(this.value)){
+                // console.log(1)
+                this.parentNode.nextElementSibling.children[0].innerHTML = "可以使用";
+                
+                that.x = true
+            }else{
+                // console.log(2)
+                this.parentNode.nextElementSibling.children[0].innerHTML = "不符合规则，请输入中文、字母、数字、“-”“_”的组合，4-20个字符";
+                // console.log(this.parentNode.nextElementSibling.children)
+                that.x = false
             }
         }
-        setLocal(){
-            // 之前有没有
-            this.userMsg = localStorage.getItem("userMsg");
-            this.userMsg = this.userMsg ? JSON.parse(this.userMsg) : [];
+        this.pass.onblur = function(){
+            if(this.value != that.pass2.value && that.pass2.value != ""){
+                this.parentNode.nextElementSibling.children[0].innerHTML = "两次不一致";
+                that.z = false
+            }
+            
+            if(this.value.length>=6 && this.value.length<=20){
+                //三种情况的开关的定义，出现了一种就对应的改成1
+                
+                //是否出现数字的正则
+                var numReg = /\d+/g;
+                // console.log(that.a)
+                that.a = numReg.test(this.value) ? 1 : 0;
+                
+                //是否出现字母的正则
+                var azReg = /[a-zA-Z]+/g;
 
-            // 之前没有，直接存
-            if(this.userMsg.length<1){
+                that.b = azReg.test(this.value) ? 1 : 0;
+                
+                //是否出现特殊的正则
+                var tsReg = /[^a-zA-Z0-9]+/g;
+
+                that.c = tsReg.test(this.value) ? 1 : 0;
+                
+                //三种情况都判断之后,验证开关的结果
+                var str = ""
+                switch(that.a+that.b+that.c){
+                    case 1:
+                        str = "简单";break;
+                    case 2:
+                        str = "一般";break;
+                    case 3:
+                        str = "困难";break;
+                }
+                this.parentNode.nextElementSibling.children[0].innerHTML = str;
+                that.y = true;
+            }else{
+                this.parentNode.nextElementSibling.children[0].innerHTML = "长度不符合";
+                that.y = false
+            }
+        }
+        this.pass2.onblur = function(){
+            if(this.value == that.pass.value){
+                this.parentNode.nextElementSibling.children[0].innerHTML = "一致";
+                that.z = true
+            }else{
+                this.parentNode.nextElementSibling.children[0].innerHTML = "两次不一致";
+                that.z = false
+            }
+        }
+        this.btn.onclick = function(){
+            that.setLocal(function(o){
+                // console.log(o)
+                if(that.x&&that.y&&that.z&&!o){
+                alert("提交成功")
+                }else{
+                alert("提交失败")
+                }
+            })
+            
+        }
+    }
+    setLocal(fn){
+        // 之前有没有
+        this.userMsg = localStorage.getItem("userMsg");
+        this.userMsg = this.userMsg ? JSON.parse(this.userMsg) : [];
+
+        // 之前没有，直接存
+        if(this.userMsg.length<1){
+            this.userMsg.push({
+                user:this.user.value,
+                pass:this.pass.value,
+                onoff:0
+            })
+        }else{
+            // 之前有，判断是否重名
+            var o = this.userMsg.some(val=>{
+                return val.user === this.user.value;
+            })
+            if(o){
+                this.span.innerHTML = "重名";
+            }else{
+                this.span.innerHTML = "";
                 this.userMsg.push({
                     user:this.user.value,
                     pass:this.pass.value,
                     onoff:0
                 })
-            }else{
-                // 之前有，判断是否重名
-                var o = this.userMsg.some(val=>{
-                    return val.user === this.user.value;
-                })
-                if(o){
-                    this.span.innerHTML = "重名";
-                }else{
-                    this.span.innerHTML = "";
-                    this.userMsg.push({
-                        user:this.user.value,
-                        pass:this.pass.value,
-                        onoff:0
-                    })
-                }
             }
-
-            localStorage.setItem("userMsg",JSON.stringify(this.userMsg))
+            // console.log(o)
+            fn(o)
         }
+
+        localStorage.setItem("userMsg",JSON.stringify(this.userMsg))
     }
+}
 
     new Zhuce();
 
